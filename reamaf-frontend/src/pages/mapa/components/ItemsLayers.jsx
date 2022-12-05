@@ -8,9 +8,11 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import MapIcon from "@mui/icons-material/Map";
 import LayersIcon from "@mui/icons-material/Layers";
 import { useState } from "react";
+import { useGetLayers } from "../../../hooks/useGetLayers";
 
 export const ItemsLayers = () => {
   const [open, setOpen] = useState(true);
+  const { handleClickLayer } = useGetLayers();
 
   const handleClick = () => {
     setOpen(!open);
@@ -31,7 +33,10 @@ export const ItemsLayers = () => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            onClick={() => handleClickLayer("wind_new")}
+            sx={{ pl: 4 }}
+          >
             <ListItemIcon>
               <LayersIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -39,7 +44,10 @@ export const ItemsLayers = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            onClick={() => handleClickLayer("precipitation_new")}
+            sx={{ pl: 4 }}
+          >
             <ListItemIcon>
               <LayersIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -47,7 +55,10 @@ export const ItemsLayers = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            onClick={() => handleClickLayer("temp_new")}
+            sx={{ pl: 4 }}
+          >
             <ListItemIcon>
               <LayersIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
