@@ -7,6 +7,7 @@ import { AppBarComponent, DrawerComponent } from "../../../components/layouts";
 
 import { useState } from "react";
 import ViewMaps from "../views/ViewMaps";
+import { LayerProvider } from "../../../context/LayerProvider";
 
 const mdTheme = createTheme();
 
@@ -17,39 +18,49 @@ function MainComponentMaps() {
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        {/* AppBar */}
-        <AppBarComponent toggleDrawer={toggleDrawer} open={open} page="Maps" />
-        {/* AppBar */}
+    <LayerProvider>
+      <ThemeProvider theme={mdTheme}>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          {/* AppBar */}
+          <AppBarComponent
+            toggleDrawer={toggleDrawer}
+            open={open}
+            page="Maps"
+          />
+          {/* AppBar */}
 
-        {/* Drawer */}
-        <DrawerComponent toggleDrawer={toggleDrawer} open={open} page="Maps" />
-        {/* Drawer */}
+          {/* Drawer */}
+          <DrawerComponent
+            toggleDrawer={toggleDrawer}
+            open={open}
+            page="Maps"
+          />
+          {/* Drawer */}
 
-        {/* componente principal */}
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
+          {/* componente principal */}
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
+            }}
+          >
+            <Toolbar />
 
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            {/* Mapa */}
-            <ViewMaps />
-          </Container>
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              {/* Mapa */}
+              <ViewMaps />
+            </Container>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LayerProvider>
   );
 }
 

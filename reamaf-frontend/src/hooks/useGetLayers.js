@@ -1,17 +1,47 @@
-import { useEffect, useState } from "react";
+import { useReducer } from "react";
+import { layerReducer } from "../pages/stateManagement/layerReducer";
 
 export const useGetLayers = () => {
-  const [layer, setLayer] = useState("temp_new");
+  const initialState = "clouds_new";
+  const [layer, dispatch] = useReducer(layerReducer, initialState);
 
-  const handleClickLayer = (layers) => {
-    setLayer(layers);
+  const handleClickLayerWindSpeed = (layer) => {
+    const action = {
+      type: "case-wind-speed",
+      payload: layer,
+    };
+
+    dispatch(action);
+
+    console.log(" capa de viento", layer);
   };
 
-  let url = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=86f4f3c85850bbd081cb816d80ad14cc`;
-  console.log(url);
+  const handleClickLayerPrecipitation = (layer) => {
+    const action = {
+      type: "case-precipitation",
+      payload: layer,
+    };
+
+    dispatch(action);
+    console.log(" capa de precipitacion", layer);
+  };
+
+  const handleClickLayerTemperature = (layer) => {
+    const action = {
+      type: "case-temperature",
+      payload: layer,
+    };
+
+    dispatch(action);
+    console.log(" capa de temperatura", layer);
+  };
+
+  console.log("Desde useGetLayers", layer);
 
   return {
-    handleClickLayer,
-    url,
+    layer,
+    handleClickLayerWindSpeed,
+    handleClickLayerPrecipitation,
+    handleClickLayerTemperature,
   };
 };

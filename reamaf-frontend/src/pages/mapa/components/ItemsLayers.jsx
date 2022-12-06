@@ -7,12 +7,18 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import MapIcon from "@mui/icons-material/Map";
 import LayersIcon from "@mui/icons-material/Layers";
-import { useState } from "react";
+import { useState, useReducer } from "react";
+import { layerReducer } from "../../stateManagement/layerReducer";
 import { useGetLayers } from "../../../hooks/useGetLayers";
 
 export const ItemsLayers = () => {
   const [open, setOpen] = useState(true);
-  const { handleClickLayer } = useGetLayers();
+
+  const {
+    handleClickLayerWindSpeed,
+    handleClickLayerPrecipitation,
+    handleClickLayerTemperature,
+  } = useGetLayers();
 
   const handleClick = () => {
     setOpen(!open);
@@ -34,18 +40,18 @@ export const ItemsLayers = () => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("wind_new")}
+            onClick={() => handleClickLayerWindSpeed("wind_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
               <LayersIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
-            <ListItemText primary="Humedad" />
+            <ListItemText primary="Velocidad del viento" />
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("precipitation_new")}
+            onClick={() => handleClickLayerPrecipitation("precipitation_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
@@ -56,7 +62,7 @@ export const ItemsLayers = () => {
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("temp_new")}
+            onClick={() => handleClickLayerTemperature("temp_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
