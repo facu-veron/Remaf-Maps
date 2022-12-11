@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useGetLayers = () => {
-  const [layer, setLayer] = useState("temp_new");
+  const [layer, setLayer] = useState('temp_new');
 
   const handleClickLayer = (layers) => {
     setLayer(layers);

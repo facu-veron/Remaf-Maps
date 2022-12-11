@@ -1,26 +1,28 @@
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import MapIcon from "@mui/icons-material/Map";
-import LayersIcon from "@mui/icons-material/Layers";
-import { useState } from "react";
-import { useGetLayers } from "../../../hooks/useGetLayers";
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import MapIcon from '@mui/icons-material/Map';
+import LayersIcon from '@mui/icons-material/Layers';
+import { useState } from 'react';
+import { useGetLayers } from '../../../hooks/useGetLayers';
+import { useSetLayer } from '../../../context/LayersProvider';
 
 export const ItemsLayers = () => {
   const [open, setOpen] = useState(true);
-  const { handleClickLayer } = useGetLayers();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
+  const handleChangeLayer = useSetLayer();
+
   return (
     <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
@@ -34,7 +36,7 @@ export const ItemsLayers = () => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("wind_new")}
+            onClick={() => handleChangeLayer('wind_new')}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
@@ -45,7 +47,7 @@ export const ItemsLayers = () => {
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("precipitation_new")}
+            onClick={() => handleChangeLayer('precipitation_new')}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
@@ -56,7 +58,7 @@ export const ItemsLayers = () => {
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayer("temp_new")}
+            onClick={() => handleChangeLayer('temp_new')}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
