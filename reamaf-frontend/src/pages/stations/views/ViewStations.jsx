@@ -1,45 +1,18 @@
-import { Grid, Paper, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Grid, Paper, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import {
   MapContainer,
   Marker,
   Popup,
   TileLayer,
   useMapEvents,
-} from "react-leaflet";
-import { getStationsById } from "../../../helpers/getStationsById";
+} from 'react-leaflet';
+import { getStationsById } from '../../../helpers/getStationsById';
 
-import { TextComponent, Title } from "../../../components/common";
+import { TextComponent, Title } from '../../../components/common';
+import IndexMapStations from './IndexMapStations';
 
 const ViewStations = ({ stationId }) => {
-  const stations = getStationsById(stationId);
-  const latitud = stations.latitud;
-  const longitud = stations.longitud;
-
-  console.log(latitud, longitud);
-
-  function UserLocationMarker() {
-    const [position, setPosition] = useState(null);
-    const map = useMapEvents({
-      click() {
-        map.locate();
-      },
-      locationfound(e) {
-        console.log(e);
-        setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-
-    return position === null ? null : (
-      <Marker position={position}>
-        <Popup>
-          <Title value="Estas aquí " />
-        </Popup>
-      </Marker>
-    );
-  }
-
   /* function StationLocationMarker() {
    const [position, setPosition] = useState(null);
     const map = useMapEvents({
@@ -67,8 +40,8 @@ const ViewStations = ({ stationId }) => {
         <Paper
           sx={{
             p: 2,
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             height: 240,
           }}
         >
@@ -105,31 +78,18 @@ const ViewStations = ({ stationId }) => {
           <Paper
             sx={{
               p: 2,
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               height: 1000,
             }}
           >
             <MapContainer
-              style={{ height: 1000, width: "auto" }}
+              style={{ height: 1000, width: 'auto' }}
               center={{ lat: 51.505, lng: -0.09 }}
               zoom={13}
               scrollWheelZoom={false}
             >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-
-              {/* <Marker  position={[latitud, longitud]}>
-                <Popup>
-                  {`Nombre: ${stations.nombre}`}
-                  <br />
-                  {`Localidad: ${stations.localidad}`}
-                </Popup>
-              </Marker> */}
-
-              <UserLocationMarker />
+              <IndexMapStations stationId={stationId} />
             </MapContainer>
           </Paper>
         </Grid>
