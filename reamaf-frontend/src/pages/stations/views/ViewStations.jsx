@@ -1,17 +1,66 @@
+import { Grid, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  Container,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import clima from "../../../media/clima.mp4";
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+  useMapEvents,
+} from "react-leaflet";
+import { getStationsById } from "../../../helpers/getStationsById";
 
-const ViewStations = () => {
+import { TextComponent, Title } from "../../../components/common";
+
+const ViewStations = ({ stationId }) => {
+  const stations = getStationsById(stationId);
+  const latitud = stations.latitud;
+  const longitud = stations.longitud;
+
+  console.log(latitud, longitud);
+
+  function UserLocationMarker() {
+    const [position, setPosition] = useState(null);
+    const map = useMapEvents({
+      click() {
+        map.locate();
+      },
+      locationfound(e) {
+        console.log(e);
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      },
+    });
+
+    return position === null ? null : (
+      <Marker position={position}>
+        <Popup>
+          <Title value="Estas aquí " />
+        </Popup>
+      </Marker>
+    );
+  }
+
+  /* function StationLocationMarker() {
+   const [position, setPosition] = useState(null);
+    const map = useMapEvents({
+      click() {
+        map.locate();
+      },
+      locationfound(e) {
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      },
+    });
+
+    return position === null ? null : (
+      <Marker position={position}>
+        <Popup>
+          <Title value="Estas aquí " />
+        </Popup>
+      </Marker>
+    );
+  } */
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={8} lg={12}>
@@ -39,10 +88,51 @@ const ViewStations = () => {
             paragraph
           >
             Encuentra informacion de cada estacion situada en nuestra Provincia
-            de Formosa. En nuestra seccion de estaciones podras visualizar
+            de Formosa. En la seccion de estaciones podras visualizar
             informacion relevante en tiempo real
           </Typography>
         </Paper>
+        <Grid
+          className="iframe animate__animated animate__fadeIn animate__delay-1s 
+          animate__slower	3s "
+          component="div"
+          item
+          sx={{ mt: 2 }}
+          xs={12}
+          md={8}
+          lg={12}
+        >
+          <Paper
+            sx={{
+              p: 2,
+              display: "flex",
+              flexDirection: "column",
+              height: 1000,
+            }}
+          >
+            <MapContainer
+              style={{ height: 1000, width: "auto" }}
+              center={{ lat: 51.505, lng: -0.09 }}
+              zoom={13}
+              scrollWheelZoom={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              {/* <Marker  position={[latitud, longitud]}>
+                <Popup>
+                  {`Nombre: ${stations.nombre}`}
+                  <br />
+                  {`Localidad: ${stations.localidad}`}
+                </Popup>
+              </Marker> */}
+
+              <UserLocationMarker />
+            </MapContainer>
+          </Paper>
+        </Grid>
       </Grid>
     </Grid>
   );

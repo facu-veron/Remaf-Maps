@@ -11,6 +11,12 @@ const mdTheme = createTheme();
 
 function MainComponentStations() {
   const [open, setOpen] = useState(true);
+  const [stationId, setStationId] = useState(1);
+
+  const getId = (id) => {
+    setStationId(id);
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -32,6 +38,7 @@ function MainComponentStations() {
           toggleDrawer={toggleDrawer}
           open={open}
           page="Stations"
+          getId={getId}
         />
         {/* Drawer */}
 
@@ -52,7 +59,7 @@ function MainComponentStations() {
 
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {/* Stations */}
-            <ViewStations />
+            <ViewStations stationId={stationId} />
           </Container>
         </Box>
       </Box>

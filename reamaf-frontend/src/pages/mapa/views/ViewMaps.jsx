@@ -1,8 +1,8 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 
 import "animate.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   MapContainer,
@@ -13,25 +13,8 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-import { useContext } from "react";
-import { LayerContext } from "../../../context/LayerContext";
-//aca esta el infeliz
-
-const ViewMaps = () => {
-  const { layer } = useContext(LayerContext);
-  let initialState = layer;
-
-  console.log("initialState", initialState);
-  const [layers, setLayers] = useState(initialState);
-
-  console.log("layers", layers);
-  useEffect(() => {
-    setLayers(layer);
-  }, [layer]);
-
-  console.log("layer traido del context", layer);
-
-  let url = `https://tile.openweathermap.org/map/${layers}/{z}/{x}/{y}.png?appid=86f4f3c85850bbd081cb816d80ad14cc`;
+const ViewMaps = ({ layer }) => {
+  let url = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=86f4f3c85850bbd081cb816d80ad14cc`;
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
@@ -54,7 +37,15 @@ const ViewMaps = () => {
   /* className="iframe animate__animated animate__fadeIn animate__delay-2s 
       animate__slower	3s animate__repeat-3" */
   return (
-    <Grid component="div" item xs={12} md={8} lg={12}>
+    <Grid
+      className="iframe animate__animated animate__fadeIn animate__delay-1s 
+    animate__slower	3s "
+      component="div"
+      item
+      xs={12}
+      md={8}
+      lg={12}
+    >
       <Paper
         sx={{
           p: 2,
@@ -65,9 +56,10 @@ const ViewMaps = () => {
       >
         <MapContainer
           style={{ height: 1000, width: "auto" }}
-          center={{ lat: 51.505, lng: -0.09 }}
+          center={{ lat: -36.616666666667, lng: -64.283333333333 }}
           zoom={13}
           scrollWheelZoom={false}
+          whenCreated={layer}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

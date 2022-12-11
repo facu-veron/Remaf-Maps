@@ -7,60 +7,62 @@ import { AppBarComponent, DrawerComponent } from "../../../components/layouts";
 
 import { useState } from "react";
 import ViewMaps from "../views/ViewMaps";
-import { LayerProvider } from "../../../context/LayerProvider";
 
 const mdTheme = createTheme();
 
 function MainComponentMaps() {
+  const [layer, setLayer] = useState("clouds_new");
+
+  const currentLayer = (layer) => {
+    setLayer(layer);
+  };
+
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
-    <LayerProvider>
-      <ThemeProvider theme={mdTheme}>
-        <Box sx={{ display: "flex" }}>
-          <CssBaseline />
-          {/* AppBar */}
-          <AppBarComponent
-            toggleDrawer={toggleDrawer}
-            open={open}
-            page="Maps"
-          />
-          {/* AppBar */}
+    <ThemeProvider theme={mdTheme}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        {/* AppBar */}
+        <AppBarComponent toggleDrawer={toggleDrawer} open={open} page="Maps" />
+        {/* AppBar */}
 
-          {/* Drawer */}
-          <DrawerComponent
-            toggleDrawer={toggleDrawer}
-            open={open}
-            page="Maps"
-          />
-          {/* Drawer */}
+        {/* Drawer */}
+        <DrawerComponent
+          toggleDrawer={toggleDrawer}
+          open={open}
+          page="Maps"
+          /* Update layer */
 
-          {/* componente principal */}
-          <Box
-            component="main"
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: "100vh",
-              overflow: "auto",
-            }}
-          >
-            <Toolbar />
+          currentLayer={currentLayer}
+        />
+        {/* Drawer */}
 
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              {/* Mapa */}
-              <ViewMaps />
-            </Container>
-          </Box>
+        {/* componente principal */}
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Toolbar />
+
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            {/* Mapa */}
+            <ViewMaps layer={layer} />
+          </Container>
         </Box>
-      </ThemeProvider>
-    </LayerProvider>
+      </Box>
+    </ThemeProvider>
   );
 }
 

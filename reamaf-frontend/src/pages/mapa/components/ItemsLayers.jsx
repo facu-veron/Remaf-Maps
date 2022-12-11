@@ -7,18 +7,14 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import MapIcon from "@mui/icons-material/Map";
 import LayersIcon from "@mui/icons-material/Layers";
-import { useState, useReducer } from "react";
-import { layerReducer } from "../../stateManagement/layerReducer";
-import { useGetLayers } from "../../../hooks/useGetLayers";
+import { useState } from "react";
 
-export const ItemsLayers = () => {
+export const ItemsLayers = ({ currentLayer }) => {
   const [open, setOpen] = useState(true);
 
-  const {
-    handleClickLayerWindSpeed,
-    handleClickLayerPrecipitation,
-    handleClickLayerTemperature,
-  } = useGetLayers();
+  const handleClickItemLayer = (layer) => {
+    currentLayer(layer);
+  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -40,18 +36,18 @@ export const ItemsLayers = () => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayerWindSpeed("wind_new")}
+            onClick={() => handleClickItemLayer("wind_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
               <LayersIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
-            <ListItemText primary="Velocidad del viento" />
+            <ListItemText primary="Velocidad del viento " />
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayerPrecipitation("precipitation_new")}
+            onClick={() => handleClickItemLayer("precipitation_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
@@ -62,7 +58,7 @@ export const ItemsLayers = () => {
         </List>
         <List component="div" disablePadding>
           <ListItemButton
-            onClick={() => handleClickLayerTemperature("temp_new")}
+            onClick={() => handleClickItemLayer("temp_new")}
             sx={{ pl: 4 }}
           >
             <ListItemIcon>

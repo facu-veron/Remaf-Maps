@@ -7,7 +7,7 @@ import { ItemsLayers } from "../../pages/mapa/components/ItemsLayers";
 import { useLocation } from "react-router-dom";
 import { ItemsStations } from "../../pages/stations/components/ItemsStations";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -35,7 +35,13 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export const DrawerComponent = ({ toggleDrawer, open, page }) => {
+export const DrawerComponent = ({
+  toggleDrawer,
+  open,
+  page,
+  currentLayer,
+  getId,
+}) => {
   {
     if (page === "Maps") {
       return (
@@ -54,7 +60,7 @@ export const DrawerComponent = ({ toggleDrawer, open, page }) => {
           </Toolbar>
           <Divider sx={{ my: 1, opacity: 0.2 }} />
           <List component="nav">
-            <ItemsLayers />
+            <ItemsLayers currentLayer={currentLayer} />
             <Divider sx={{ my: 1, opacity: 0.2 }} />
           </List>
         </Drawer>
@@ -78,7 +84,7 @@ export const DrawerComponent = ({ toggleDrawer, open, page }) => {
           </Toolbar>
           <Divider sx={{ my: 1, opacity: 0.2 }} />
           <List component="nav">
-            <ItemsStations />
+            <ItemsStations getId={getId} />
             <Divider sx={{ my: 1, opacity: 0.2 }} />
           </List>
         </Drawer>
