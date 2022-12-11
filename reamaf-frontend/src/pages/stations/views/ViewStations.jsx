@@ -25,7 +25,6 @@ const ViewStations = ({ stationId }) => {
         map.locate();
       },
       locationfound(e) {
-        console.log(e);
         setPosition(e.latlng);
         map.flyTo(e.latlng, map.getZoom());
       },
@@ -39,27 +38,6 @@ const ViewStations = ({ stationId }) => {
       </Marker>
     );
   }
-
-  /* function StationLocationMarker() {
-   const [position, setPosition] = useState(null);
-    const map = useMapEvents({
-      click() {
-        map.locate();
-      },
-      locationfound(e) {
-        setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-
-    return position === null ? null : (
-      <Marker position={position}>
-        <Popup>
-          <Title value="Estas aquí " />
-        </Popup>
-      </Marker>
-    );
-  } */
 
   return (
     <Grid container spacing={3}>
@@ -120,14 +98,6 @@ const ViewStations = ({ stationId }) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-
-              {/* <Marker  position={[latitud, longitud]}>
-                <Popup>
-                  {`Nombre: ${stations.nombre}`}
-                  <br />
-                  {`Localidad: ${stations.localidad}`}
-                </Popup>
-              </Marker> */}
 
               <UserLocationMarker />
             </MapContainer>
