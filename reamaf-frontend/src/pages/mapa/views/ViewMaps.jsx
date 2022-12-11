@@ -12,11 +12,9 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useGetLayers } from "../../../hooks/useGetLayers";
-import { useEffect } from "react";
 
-const ViewMaps = () => {
-  const { url } = useGetLayers();
+const ViewMaps = ({ layer }) => {
+  let url = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=86f4f3c85850bbd081cb816d80ad14cc`;
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
@@ -39,20 +37,29 @@ const ViewMaps = () => {
   /* className="iframe animate__animated animate__fadeIn animate__delay-2s 
       animate__slower	3s animate__repeat-3" */
   return (
-    <Grid component="div" item xs={12} md={8} lg={9}>
+    <Grid
+      className="iframe animate__animated animate__fadeIn animate__delay-1s 
+    animate__slower	3s "
+      component="div"
+      item
+      xs={12}
+      md={8}
+      lg={12}
+    >
       <Paper
         sx={{
           p: 2,
           display: "flex",
           flexDirection: "column",
-          height: 800,
+          height: 1000,
         }}
       >
         <MapContainer
-          style={{ height: 800 }}
-          center={{ lat: 51.505, lng: -0.09 }}
+          style={{ height: 1000, width: "auto" }}
+          center={{ lat: -36.616666666667, lng: -64.283333333333 }}
           zoom={13}
           scrollWheelZoom={false}
+          whenCreated={layer}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

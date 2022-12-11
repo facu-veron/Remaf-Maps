@@ -9,7 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SouthAmericaIcon from "@mui/icons-material/SouthAmerica";
 import { useState } from "react";
 
-export const ItemsStations = () => {
+export const ItemsStations = ({ getId }) => {
   const [open, setOpen] = useState(true);
 
   const handleClick = () => {
@@ -31,7 +31,7 @@ export const ItemsStations = () => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(1)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -39,7 +39,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(2)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -47,7 +47,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(3)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -55,7 +55,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(4)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -63,7 +63,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(5)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -71,7 +71,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(6)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -79,7 +79,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(7)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -87,7 +87,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(8)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -95,7 +95,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(9)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>
@@ -103,7 +103,7 @@ export const ItemsStations = () => {
           </ListItemButton>
         </List>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton onClick={() => getId(10)} sx={{ pl: 4 }}>
             <ListItemIcon>
               <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
             </ListItemIcon>

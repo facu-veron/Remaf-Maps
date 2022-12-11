@@ -11,6 +11,12 @@ import ViewMaps from "../views/ViewMaps";
 const mdTheme = createTheme();
 
 function MainComponentMaps() {
+  const [layer, setLayer] = useState("clouds_new");
+
+  const currentLayer = (layer) => {
+    setLayer(layer);
+  };
+
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -25,7 +31,14 @@ function MainComponentMaps() {
         {/* AppBar */}
 
         {/* Drawer */}
-        <DrawerComponent toggleDrawer={toggleDrawer} open={open} page="Maps" />
+        <DrawerComponent
+          toggleDrawer={toggleDrawer}
+          open={open}
+          page="Maps"
+          /* Update layer */
+
+          currentLayer={currentLayer}
+        />
         {/* Drawer */}
 
         {/* componente principal */}
@@ -45,7 +58,7 @@ function MainComponentMaps() {
 
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {/* Mapa */}
-            <ViewMaps />
+            <ViewMaps layer={layer} />
           </Container>
         </Box>
       </Box>
