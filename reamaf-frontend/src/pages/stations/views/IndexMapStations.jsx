@@ -1,31 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
-// import { getStationsById } from '../../../helpers/getStationsById';
-import { stationsData } from '../../../data/stationsData';
-import { getStationsById } from '../../../helpers/getStationsById';
-
-// function UserLocationMarker() {
-//   const [position, setPosition] = useState(null);
-//   const map = useMapEvents({
-//     click() {
-//       map.locate();
-//     },
-//     locationfound(e) {
-//       console.log(e);
-//       setPosition(e.latlng);
-//       map.flyTo(e.latlng, map.getZoom());
-//     },
-//   });
-
-//   return position === null ? null : (
-//     <Marker position={position}>
-//       <Popup>
-//         <Title value="Estas aquí " />
-//       </Popup>
-//     </Marker>
-//   );
-// }
-
+import { Grid } from "@mui/material";
+import React, { useEffect } from "react";
+import { Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { stationsData } from "../../../data/stationsData";
+import { getStationsById } from "../../../helpers/getStationsById";
+import { TextComponentPopup } from "../components/TextComponetPopup";
+import "animate.css";
 const IndexMapStations = ({ stationId }) => {
   const map = useMapEvents({
     click() {
@@ -73,21 +52,64 @@ const IndexMapStations = ({ stationId }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {stationsData?.map((station) => (
-        <Marker
-          position={[station.latitud, station.longitud]}
-          key={station.id}
-          eventHandlers={{
-            click: (e) => {
-              changeStation(station.latitud, station.longitud);
-            },
-          }}
+        <Grid
+          className="iframe animate__animated animate__animate__flash animate__delay-1s 
+          animate__slower	3s "
+          component="div"
         >
-          <Popup>
-            {`Nombre: ${station.nombre}`}
-            <br />
-            {`Localidad: ${station.localidad}`}
-          </Popup>
-        </Marker>
+          <Marker
+            position={[station.latitud, station.longitud]}
+            key={station.id}
+            eventHandlers={{
+              click: () => {
+                changeStation(station.latitud, station.longitud);
+              },
+            }}
+          >
+            <Popup>
+              <TextComponentPopup
+                title={"Estación: "}
+                description={`${station.id}`}
+              />
+
+              <br />
+              <TextComponentPopup
+                title={"Dirección: "}
+                description={`${station.direccion}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Localidad: "}
+                description={`${station.localidad}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Temperatura: "}
+                description={`${station.temperatura}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Humedad: "}
+                description={`${station.humedad}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Precipitación: "}
+                description={`${station.precipitacion}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Direccion del viento: "}
+                description={`${station.direcc_viento}`}
+              />
+              <br />
+              <TextComponentPopup
+                title={"Velocidad del viento: "}
+                description={`${station.veloc_viento}`}
+              />
+            </Popup>
+          </Marker>
+        </Grid>
       ))}
     </>
   );
