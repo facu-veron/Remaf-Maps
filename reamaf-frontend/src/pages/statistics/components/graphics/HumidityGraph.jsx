@@ -12,6 +12,9 @@ import {
 
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { connect } from 'react-redux';
+import { useState, useEffect } from "react";
+import { get_estacion } from "../../../../actions/estaciones_action";
 
 import { Title } from "../../../../components/common/Title";
 ChartJS.register(
@@ -33,26 +36,38 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = ["Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Temperatura maxima",
-      data: labels.map(() => faker.datatype.number({ min: 20, max: 35 })),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Temperatura minima",
-      data: labels.map(() => faker.datatype.number({ min: -3, max: 20 })),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-export const HumidityGraph = () => {
+
+const HumidityGraph = (props) => {
+  const [estacion, setEstacion] = useState([0])
+
+  useEffect( () => {
+    console.log(props);
+    props.get_estacion(3 , "2022/05/01", "2022/11/30").then( (res) => {
+      console.log(res)
+      setEstacion(res)
+    })
+  }, [])
+
+  let data = {
+    labels,
+    datasets: [
+         
+      {
+        label: "Humedad máxima",
+        data: estacion.map( elem => elem.humedad_max ),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Humedad mínima",
+        data: estacion.map( elem => elem.humedad_min ),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
   return (
     <Grid item xs={12} md={8} lg={12}>
       <Paper
@@ -70,3 +85,11 @@ export const HumidityGraph = () => {
     </Grid>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, {get_estacion})(HumidityGraph)
