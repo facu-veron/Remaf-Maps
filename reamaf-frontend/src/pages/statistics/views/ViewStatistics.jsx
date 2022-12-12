@@ -2,10 +2,10 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { HumidityGraph } from "../components/graphics/HumidityGraph";
+import  HumidityGraph  from "../components/graphics/HumidityGraph";
 import { Button } from "@mui/material";
-import { PrecipitationGraph } from "../components/graphics/PrecipitationGraph";
-import { TemperatureGraph } from "../components/graphics/TemperatureGraph";
+import  PrecipitationGraph from "../components/graphics/PrecipitationGraph";
+import  TemperatureGraph from "../components/graphics/TemperatureGraph";
 
 const ViewStatistics = () => {
   return (
