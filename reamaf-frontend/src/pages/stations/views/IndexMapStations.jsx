@@ -53,6 +53,7 @@ const IndexMapStations = ({ stationId }) => {
       />
       {stationsData?.map((station) => (
         <Grid
+          key={station.id}
           className="iframe animate__animated animate__animate__flash animate__delay-1s 
           animate__slower	3s "
           component="div"

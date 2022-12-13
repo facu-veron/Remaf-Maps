@@ -38,15 +38,6 @@ const ViewStatistics = ({ statisticsId }) => {
             estadisticas encontraras graficos interactivos con datos relevantes
             de Temperatura, Humdead y Precipitación.
           </Typography>
-          <Stack
-            sx={{ pt: 4 }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          >
-            <Button variant="contained">Main call to action</Button>
-            <Button variant="outlined">Secondary action</Button>
-          </Stack>
         </Container>
       </Box>
       <Container sx={{ py: 8 }} maxWidth="md">
