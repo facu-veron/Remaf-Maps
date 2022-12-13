@@ -1,5 +1,5 @@
 import { Grid, Paper } from "@mui/material";
-
+import { Title } from "../../../components/common";
 import "animate.css";
 
 import { useState } from "react";
@@ -30,7 +30,9 @@ const ViewMaps = ({ layer }) => {
 
     return position === null ? null : (
       <Marker position={position}>
-        <Popup>You are here</Popup>
+        <Popup>
+          <Title value="Usted se encuentra aquí " />
+        </Popup>
       </Marker>
     );
   }

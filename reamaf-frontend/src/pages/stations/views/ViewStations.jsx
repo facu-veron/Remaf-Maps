@@ -2,7 +2,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { MapContainer } from "react-leaflet";
 import "animate.css";
 import IndexMapStations from "./IndexMapStations";
-
+import imgCampo from "../../../assets/img/imgCampo.jpg";
 const ViewStations = ({ stationId }) => {
   return (
     <Grid container spacing={3}>

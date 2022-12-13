@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
-import { Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { Circle, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import { stationsData } from "../../../data/stationsData";
 import { getStationsById } from "../../../helpers/getStationsById";
 import { TextComponentPopup } from "../components/TextComponetPopup";
@@ -60,7 +60,6 @@ const IndexMapStations = ({ stationId }) => {
         >
           <Marker
             position={[station.latitud, station.longitud]}
-            key={station.id}
             eventHandlers={{
               click: () => {
                 changeStation(station.latitud, station.longitud);
@@ -110,6 +109,11 @@ const IndexMapStations = ({ stationId }) => {
               />
             </Popup>
           </Marker>
+          <Circle
+            center={[station.latitud, station.longitud]}
+            pathOptions={{ fillColor: "blue" }}
+            radius={50}
+          />
         </Grid>
       ))}
     </>
