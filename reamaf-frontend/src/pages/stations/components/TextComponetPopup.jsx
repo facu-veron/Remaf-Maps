@@ -13,7 +13,7 @@ export const TextComponentPopup = ({ title, description }) => {
       >
         {title}
       </Typography>
-      <Typography sx={{ p: 0, m: 0 }} component="h2" variant="h6" gutterBottom>
+      <Typography sx={{ p: 0, m: 0 }} component="h2" variant="h5" gutterBottom>
         {description}
       </Typography>
     </Stack>
