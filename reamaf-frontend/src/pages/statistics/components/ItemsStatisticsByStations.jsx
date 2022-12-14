@@ -7,14 +7,41 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { set_estaciones, set_estacion } from "../../../actions/estaciones_action";
 
-export const ItemsStatisticsByStations = ({ getId }) => {
+const ItemsStatisticsByStations = (props) => {
   const [open, setOpen] = useState(true);
+  const [stations, setStations] = useState("")
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    
+    props.set_estaciones()
+    
+  }, []);
+
+  useEffect( () => {
+    console.log(props);
+    if (!props.state.estaciones_reducer.estaciones) {
+      return false
+    }
+
+    if(props.state.estaciones_reducer.estaciones.length > 0){
+      console.log('entró...')
+      setStations(props.state.estaciones_reducer.estaciones[0])
+    }
+  }, [props.state.estaciones_reducer.estaciones])
+
+
+  const set_stadics = (id) => {
+    
+    props.set_estacion(id)
+  }
 
   return (
     <List
@@ -30,87 +57,28 @@ export const ItemsStatisticsByStations = ({ getId }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(1)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 1" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(2)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 2" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(3)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 3" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(4)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 4" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(5)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 5" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(6)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 6" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(7)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 7" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(8)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 8" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(9)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 9" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(10)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 10" />
-          </ListItemButton>
-        </List>
+
+      {stations !== "" && stations.map( station =>
+        
+          <List component="div" disablePadding>
+            <ListItemButton onClick={() => set_stadics(station.location.id_weather_station)} sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <BarChartIcon sx={{ fontSize: 30 }} color="primary" />
+              </ListItemIcon>
+              <ListItemText primary={station.location.name} />
+            </ListItemButton>
+          </List>
+        )}
+
       </Collapse>
     </List>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, {set_estaciones, set_estacion})(ItemsStatisticsByStations)

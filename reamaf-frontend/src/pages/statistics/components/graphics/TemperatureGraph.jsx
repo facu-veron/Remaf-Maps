@@ -43,12 +43,16 @@ const TemperatureGraph = (props) => {
   const [estacion, setEstacion] = useState([0])
 
   useEffect( () => {
-    console.log(props);
-    props.get_estacion(3 , "2022/05/01", "2022/11/30").then( (res) => {
-      console.log(res)
-      setEstacion(res)
-    })
-  }, [])
+    //console.log("estados nuevos");
+    if(props.state.estaciones_reducer.estacion.id !== ""){
+      const id_estacion = props.state.estaciones_reducer.estacion.id
+      props.get_estacion(id_estacion , "2022/05/01", "2022/11/30").then( (res) => {
+        //console.log(res)
+        setEstacion(res)
+      })
+    }
+    
+  }, [props.state.estaciones_reducer.estacion])
 
   let data = {
     labels,

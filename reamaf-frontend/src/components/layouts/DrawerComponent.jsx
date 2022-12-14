@@ -5,8 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { ItemsLayers } from "../../pages/mapa/components/ItemsLayers";
 import { useLocation } from "react-router-dom";
-import { ItemsStations } from "../../pages/stations/components/ItemsStations";
-import { ItemsStatisticsByStations } from "../../pages/statistics/components/ItemsStatisticsByStations";
+import  ItemsStations  from "../../pages/stations/components/ItemsStations";
+import  ItemsStatisticsByStations  from "../../pages/statistics/components/ItemsStatisticsByStations";
 
 const drawerWidth = 250;
 

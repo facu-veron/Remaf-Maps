@@ -43,29 +43,28 @@ const HumidityGraph = (props) => {
   const [estacion, setEstacion] = useState([0])
 
   useEffect( () => {
-    console.log(props);
-    props.get_estacion(3 , "2022/05/01", "2022/11/30").then( (res) => {
-      console.log(res)
-      setEstacion(res)
-    })
-  }, [])
+    //console.log("estados nuevos");
+    if(props.state.estaciones_reducer.estacion.id !== ""){
+      const id_estacion = props.state.estaciones_reducer.estacion.id
+      props.get_estacion(id_estacion , "2022/05/01", "2022/11/30").then( (res) => {
+        //console.log(res)
+        setEstacion(res)
+      })
+    }
+    
+  }, [props.state.estaciones_reducer.estacion])
 
   let data = {
     labels,
     datasets: [
          
       {
-        label: "Humedad máxima",
-        data: estacion.map( elem => elem.humedad_max ),
+        label: "Humedad ",
+        data: estacion.map( elem => elem.humedad ),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      {
-        label: "Humedad mínima",
-        data: estacion.map( elem => elem.humedad_min ),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
+      
     ],
   };
   return (

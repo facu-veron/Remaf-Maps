@@ -43,29 +43,28 @@ const labels = ["Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre"
   const [estacion, setEstacion] = useState([0])
 
   useEffect( () => {
-    console.log(props);
-    props.get_estacion(3 , "2022/05/01", "2022/11/30").then( (res) => {
-      console.log(res)
-      setEstacion(res)
-    })
-  }, [])
+    //console.log("estados nuevos");
+    if(props.state.estaciones_reducer.estacion.id !== ""){
+      const id_estacion = props.state.estaciones_reducer.estacion.id
+      props.get_estacion(id_estacion , "2022/05/01", "2022/11/30").then( (res) => {
+        //console.log(res)
+        setEstacion(res)
+      })
+    }
+    
+  }, [props.state.estaciones_reducer.estacion])
 
   let data = {
     labels,
     datasets: [
          
       {
-        label: "Precipitación máxima",
-        data: estacion.map( elem => elem.precipit_max ),
+        label: "Precipitación",
+        data: estacion.map( elem => elem.precipitacion ),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      {
-        label: "Precipitación mínima",
-        data: estacion.map( elem => elem.precipit_min ),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
+      
     ],
   };
   return (
