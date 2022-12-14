@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const set_estacion = (id, name) => async (dispatch) => {
+export const set_estacion = (id, name = "") => async (dispatch) => {
     try {
 
         //console.log(id)
@@ -40,18 +40,47 @@ export const set_estacion = (id, name) => async (dispatch) => {
 
 export const set_estaciones = () => async (dispatch) => {
     try {
-        
+        let datos_final = []
         const datos = await axios.get("http://25.60.214.193:3000/datos/")
-        //console.log(datos);
+
+        // const dato = (await axios.post("http://25.60.214.193:3000/datos/get_datos" ,{
+        //     id_estacion: id
+        // })).data[0]
+        //datos_final = datos.data
+        datos.data.forEach(elem => {
+            datos_final.push({ location: elem })
+        })
+
+        datos_final = await Promise.all(
+            datos_final.map(async elem => {
+                let res = await axios.post("http://25.60.214.193:3000/datos/get_datos" ,{
+                    id_estacion: elem.location.id_weather_station
+                });
+
+                elem.location.data = res.data[0];
+
+                return elem;
+            })
+        );
+
+        //console.log("set_Estacionessssssssssss");
+        //console.log(datos_final);
         dispatch({
             type: "SET_ESTACIONES",
-            payload: datos
+            payload: datos_final
         })
+
+        return datos_final;
+
+        //.slice(6, -1).split(" ")
     } catch (error) {
+        //console.log(error);
         dispatch({
             type: "error",
             payload: "Algo malio sal"
         })
+
+        return false;
     }
 }
 
@@ -118,7 +147,7 @@ export const get_estacion = (id ,fecha_ini, fecha_fin) => async (dispatch) => {
             //console.log("suma " + suma)
             
         }
-        console.log(datos)
+        //console.log(datos)
         return datos
     } catch (error) {
         console.log("no anda")

@@ -7,14 +7,28 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SouthAmericaIcon from "@mui/icons-material/SouthAmerica";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
-export const ItemsStations = ({ getId }) => {
+const ItemsStations = (props) => {
   const [open, setOpen] = useState(true);
+  const [stations, setStations] = useState("")
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  useEffect( () => {
+    console.log(props);
+    if (!props.state.estaciones_reducer.estaciones) {
+      return false
+    }
+
+    if(props.state.estaciones_reducer.estaciones.length > 0){
+      console.log('entró...')
+      setStations(props.state.estaciones_reducer.estaciones[0])
+    }
+  }, [props.state.estaciones_reducer.estaciones])
 
   return (
     <List
@@ -30,87 +44,27 @@ export const ItemsStations = ({ getId }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(1)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 1" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(2)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 2" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(3)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 3" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(4)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 4" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(5)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 5" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(6)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 6" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(7)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 7" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(8)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 8" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(9)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 9" />
-          </ListItemButton>
-        </List>
-        <List component="div" disablePadding>
-          <ListItemButton onClick={() => getId(10)} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Estación 10" />
-          </ListItemButton>
-        </List>
+
+      {stations !== "" && stations.map( station => 
+            <List component="div" disablePadding>
+              <ListItemButton onClick={() => props.getId(station.location.id_weather_station)} sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <SouthAmericaIcon sx={{ fontSize: 30 }} color="primary" />
+                </ListItemIcon>
+                <ListItemText primary={station.location.name} />
+              </ListItemButton>
+          </List>
+        )}
+        
       </Collapse>
     </List>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps)(ItemsStations)

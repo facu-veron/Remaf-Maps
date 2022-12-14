@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
             case "SET_ESTACIONES":
             return{
                 ...state,
-                estaciones: action.payload,
+                estaciones: [action.payload],
             }
         case "ERROR":
             return {

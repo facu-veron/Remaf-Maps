@@ -1,11 +1,17 @@
 import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Circle, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import { stationsData } from "../../../data/stationsData";
 import { getStationsById } from "../../../helpers/getStationsById";
 import { TextComponentPopup } from "../components/TextComponetPopup";
+import { connect } from 'react-redux';
+import { get_estacion, set_estaciones } from "../../../actions/estaciones_action";
+
 import "animate.css";
-const IndexMapStations = ({ stationId }) => {
+const IndexMapStations = (props) => {
+  const [dataStation, setDataStation] = useState("")
+  
+
   const map = useMapEvents({
     click() {
       map.locate();
@@ -25,25 +31,67 @@ const IndexMapStations = ({ stationId }) => {
       15
     );
   };
+
   useEffect(() => {
     map.locate();
+    props.set_estaciones()
+      /*.then((res) => {
+        if (res) {
+          if(res.length > 0){
+            console.log('entró... ------------------')
+            setDataStation(res);
+          }
+        }
+      });*/
   }, []);
 
+  /*
   useEffect(() => {
-    if (!stationId) return;
 
-    const station = getStationsById(stationId);
-    const latitud = station.latitud;
-    const longitud = station.longitud;
+  })
+  */
 
-    map.flyTo(
-      {
-        lat: latitud,
-        lng: longitud,
-      },
-      18
-    );
-  }, [stationId]);
+  
+  useEffect( () => {
+    //console.log("estaciones");
+    //console.log(props.state);
+    if (!props.state.estaciones_reducer.estaciones) {
+      return false
+    }
+
+    if(props.state.estaciones_reducer.estaciones.length > 0){
+      console.log('entró...')
+      setDataStation(props.state.estaciones_reducer.estaciones[0])
+    }
+    
+    //console.log(dataStation);
+  }, [props.state.estaciones_reducer.estaciones])
+  
+
+  useEffect(() => {
+    if (!props.stationId) return;
+
+    let data_geo
+    if(dataStation){
+
+      dataStation.forEach( elem => {
+        if(elem.location.id_weather_station == props.stationId){
+          data_geo = elem.location.punto.slice(6, -1).split(" ")
+        }
+      }) 
+      
+      const latitud = data_geo[1];
+      const longitud = data_geo[0];
+  
+      map.flyTo(
+        {
+          lat: latitud,
+          lng: longitud,
+        },
+        18
+      );
+    }
+  }, [props.stationId]);
 
   return (
     <>
@@ -51,7 +99,7 @@ const IndexMapStations = ({ stationId }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {stationsData?.map((station) => (
+      {dataStation !== "" && dataStation.map((station) => (
         <Grid
           key={station.id}
           className="iframe animate__animated animate__animate__flash animate__delay-1s 
@@ -59,58 +107,53 @@ const IndexMapStations = ({ stationId }) => {
           component="div"
         >
           <Marker
-            position={[station.latitud, station.longitud]}
+            position={[station.location.punto.slice(6, -1).split(" ")[1], station.location.punto.slice(6, -1).split(" ")[0]]}
             eventHandlers={{
               click: () => {
-                changeStation(station.latitud, station.longitud);
+                changeStation(station.location.punto.slice(6, -1).split(" ")[1], station.location.punto.slice(6, -1).split(" ")[0]);
               },
             }}
           >
             <Popup>
               <TextComponentPopup
                 title={"Estación: "}
-                description={`${station.id}`}
+                description={`${station.location.id_weather_station}`}
               />
-
+              
               <br />
-              <TextComponentPopup
-                title={"Dirección: "}
-                description={`${station.direccion}`}
-              />
-              <br />
-              <TextComponentPopup
+               <TextComponentPopup
                 title={"Localidad: "}
-                description={`${station.localidad}`}
+                description={`${station.location.data.localidad}`}
               />
               <br />
               <TextComponentPopup
                 title={"Temperatura: "}
-                description={`${station.temperatura}`}
+                description={`${station.location.data.temperatura}`}
               />
               <br />
               <TextComponentPopup
                 title={"Humedad: "}
-                description={`${station.humedad}`}
+                description={`${station.location.data.humedad}`}
               />
               <br />
               <TextComponentPopup
                 title={"Precipitación: "}
-                description={`${station.precipitacion}`}
+                description={`${station.location.data.precipitacion}`}
               />
               <br />
               <TextComponentPopup
                 title={"Direccion del viento: "}
-                description={`${station.direcc_viento}`}
+                description={`${station.location.data.direcc_viento}`}
               />
               <br />
               <TextComponentPopup
                 title={"Velocidad del viento: "}
-                description={`${station.veloc_viento}`}
-              />
+                description={`${station.location.data.veloc_viento}`}
+              /> 
             </Popup>
           </Marker>
           <Circle
-            center={[station.latitud, station.longitud]}
+            center={[station.location.punto.slice(6, -1).split(" ")[1], station.location.punto.slice(6, -1).split(" ")[0]]}
             pathOptions={{ fillColor: "blue" }}
             radius={50}
           />
@@ -120,4 +163,10 @@ const IndexMapStations = ({ stationId }) => {
   );
 };
 
-export default IndexMapStations;
+const mapStateToProps = state => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, {set_estaciones})(IndexMapStations);

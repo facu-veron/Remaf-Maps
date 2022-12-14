@@ -8,7 +8,7 @@ import PrecipitationGraph from "../components/graphics/PrecipitationGraph";
 import TemperatureGraph from "../components/graphics/TemperatureGraph";
 
 const ViewStatistics = ({ statisticsId }) => {
-  console.log(statisticsId);
+  //console.log(statisticsId);
   return (
     <main>
       <Box
