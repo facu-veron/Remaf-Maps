@@ -59,17 +59,12 @@ const labels = ["Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre"
     datasets: [
          
       {
-        label: "Precipitación máxima",
-        data: estacion.map( elem => elem.precipit_max ),
+        label: "Precipitación",
+        data: estacion.map( elem => elem.precipitacion ),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      {
-        label: "Precipitación mínima",
-        data: estacion.map( elem => elem.precipit_min ),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
+      
     ],
   };
   return (

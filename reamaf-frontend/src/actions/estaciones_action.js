@@ -104,43 +104,38 @@ export const get_estacion = (id ,fecha_ini, fecha_fin) => async (dispatch) => {
             suma += 28
             //console.log(suma)
            // console.log(dato.data[suma])
-            let humedad_min = ""
-            let humedad_max = ""
-            let temperat_min = ""
-            let temperat_max = ""
-            let precipit_min = ""
-            let precipit_max = ""
+           let temperat_min = ""
+           let temperat_max = ""
+            let humedad = 0
+            let precipitacion = 0
            
             for (let j = suma - 28; j < suma; j++) {
-                if(humedad_min == ""){
-                    humedad_min = dato.data[j].humedad
-                    humedad_max = dato.data[j].humedad
+                if(temperat_min == ""){
                     temperat_min = dato.data[j].temperatura
                     temperat_max = dato.data[j].temperatura
-                    precipit_min = dato.data[j].precipitacion
-                    precipit_max = dato.data[j].precipitacion
                 }
                
-                humedad_min = dato.data[j].humedad < humedad_min ? dato.data[j].humedad : humedad_min
-                humedad_max = dato.data[j].humedad >= humedad_max ? dato.data[j].humedad : humedad_max
                 temperat_min = dato.data[j].temperatura < temperat_min ? dato.data[j].temperatura : temperat_min
                 temperat_max = dato.data[j].temperatura >= temperat_max ? dato.data[j].temperatura : temperat_max
-                precipit_min = dato.data[j].precipitacion < precipit_min ? dato.data[j].precipitacion : precipit_min
-                precipit_max = dato.data[j].precipitacion >= precipit_max ? dato.data[j].precipitacion : precipit_max
                 
                 
+                humedad += dato.data[j].humedad
+                precipitacion += dato.data[j].precipitacion
             }
             
-            
+            humedad = humedad / 28
+            precipitacion = precipitacion / 28
+
             datos.push( {
                 dato: dato.data[suma]
-                ,humedad_min: humedad_min
-                ,humedad_max: humedad_max
                 ,temperat_max: temperat_max
                 ,temperat_min: temperat_min
-                ,precipit_min: precipit_min
-                ,precipit_max: precipit_max
+                ,humedad: humedad
+                ,precipitacion: precipitacion
             })
+            console.log("datoss")
+            console.log(humedad)
+            console.log(precipitacion)
             //console.log(datos[datos.length - 1])
             //console.log("minima " + i + " " + minimo)
             //console.log("maxima " + i + " " + maximo)
